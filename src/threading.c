@@ -186,7 +186,12 @@ void jl_init_threading(void)
         jl_n_threads = jl_max_threads;
 
     // set up space for per-thread heaps
-    jl_all_heaps = (_jl_thread_heap_t**) malloc(jl_n_threads * sizeof(void*));
+    jl_all_heaps =
+#ifdef __cplusplus
+        // undeclared?
+        (_jl_thread_heap_t**)
+#endif
+        malloc(jl_n_threads * sizeof(void*));
     jl_all_pgcstacks = (jl_gcframe_t***) malloc(jl_n_threads * sizeof(void*));
     jl_all_task_states = (jl_thread_task_state_t*) malloc(jl_n_threads * sizeof(jl_thread_task_state_t));
 
