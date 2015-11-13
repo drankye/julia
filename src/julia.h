@@ -49,7 +49,7 @@ extern "C" {
 #define container_of(ptr, type, member) \
     ((type *) ((char *)(ptr) - offsetof(type, member)))
 
-#ifdef _MSC_VER
+#ifdef _COMPILER_MICROSOFT_
 #if _WIN64
 #define JL_ATTRIBUTE_ALIGN_PTRSIZE(x) __declspec(align(8)) x
 #else
@@ -73,7 +73,7 @@ extern "C" {
 #ifndef JULIA_ENABLE_THREADING
 // Definition for compiling non-thread-safe Julia.
 #  define JL_THREAD
-#elif !defined(_OS_WINDOWS_)
+#elif !defined(_COMPILER_MICROSOFT_)
 // Definition for compiling Julia on platforms with GCC __thread.
 #  define JL_THREAD __thread
 #else
